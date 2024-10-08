@@ -65,3 +65,4 @@ C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\refint\NFLGamePredict
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGamePredictor.pdb
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGamePredictor.genruntimeconfig.cache
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\ref\NFLGamePredictor.dll
+C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGamePredictor.sourcelink.json
