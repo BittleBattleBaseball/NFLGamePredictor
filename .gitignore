@@ -1,0 +1,7 @@
+
+/.vs
+/NFLGamePredictor/bin
+/NFLGamePredictor/bin
+*.dll
+/NFLGamePredictor/bin/Debug
+/NFLGamePredictor/obj
