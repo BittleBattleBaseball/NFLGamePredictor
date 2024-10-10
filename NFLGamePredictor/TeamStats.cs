@@ -36,5 +36,7 @@
         public double TimeOfPosession { get; set; }
 
         public double DefensiveStuffs { get; set; }
+
+        public double QBRating { get; set; }
     }
 }

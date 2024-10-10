@@ -129,6 +129,8 @@ namespace NFLGamePredictor.Services
             stats.YardsPerGame = passingStats.stats[9].value;
             stats.PointsPerGame = scoringStats.stats[9].value;
             stats.DefensiveStuffs = rushingStats.stats[14].value;
+            stats.QBRating = passingStats.stats[42].value;
+
             return stats;
         }
 

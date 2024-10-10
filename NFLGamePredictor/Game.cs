@@ -99,6 +99,19 @@ namespace NFLGamePredictor
                 awayAdjWp += this.HomeTeam.Stats.DefensiveStuffs / this.AwayTeam.Stats.DefensiveStuffs;
             }
 
+
+            //5) Adjust for QBR
+            if (this.HomeTeam.Stats.QBRating > this.AwayTeam.Stats.QBRating)
+            {
+                homeAdjWp += (this.HomeTeam.Stats.QBRating / this.AwayTeam.Stats.QBRating) + 1.5;
+                awayAdjWp -= (this.HomeTeam.Stats.QBRating / this.AwayTeam.Stats.QBRating) + 1.5;
+            }
+            else if (this.HomeTeam.Stats.QBRating < this.AwayTeam.Stats.QBRating)
+            {
+                homeAdjWp -= (this.HomeTeam.Stats.QBRating / this.AwayTeam.Stats.QBRating) + 1.5;
+                awayAdjWp += (this.HomeTeam.Stats.QBRating / this.AwayTeam.Stats.QBRating) + 1.5;
+            }
+
             this.HomeTeam.AdjustedWinProbability = homeAdjWp;
             this.AwayTeam.AdjustedWinProbability = awayAdjWp;
 
