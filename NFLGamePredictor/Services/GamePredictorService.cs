@@ -119,6 +119,7 @@ namespace NFLGamePredictor.Services
             TeamStats stats = new TeamStats();
             var generalStats = response.splits.categories[0];
             var passingStats = response.splits.categories[1];
+            var rushingStats = response.splits.categories[2];
             var scoringStats = response.splits.categories[9];
             var defensiveStats = response.splits.categories[4];
 
@@ -126,7 +127,8 @@ namespace NFLGamePredictor.Services
             //stats.PointsFor = Convert.ToInt32(scoringStats.stats[8].value);
             stats.SacksFor = Convert.ToInt32(defensiveStats.stats[14].value);
             stats.YardsPerGame = passingStats.stats[9].value;
-            stats.PointsPerGame = scoringStats.stats[9].value;  
+            stats.PointsPerGame = scoringStats.stats[9].value;
+            stats.DefensiveStuffs = rushingStats.stats[14].value;
             return stats;
         }
 

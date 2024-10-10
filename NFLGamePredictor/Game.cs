@@ -87,6 +87,18 @@ namespace NFLGamePredictor
                 awayAdjWp += this.HomeTeam.Stats.PointsPerGame / this.AwayTeam.Stats.PointsPerGame;
             }
 
+            //4) Adjust for Defensive Stuffs
+            if (this.HomeTeam.Stats.DefensiveStuffs > this.AwayTeam.Stats.DefensiveStuffs)
+            {
+                homeAdjWp += this.HomeTeam.Stats.DefensiveStuffs / this.AwayTeam.Stats.DefensiveStuffs;
+                awayAdjWp -= this.HomeTeam.Stats.DefensiveStuffs / this.AwayTeam.Stats.DefensiveStuffs;
+            }
+            else if (this.HomeTeam.Stats.DefensiveStuffs < this.AwayTeam.Stats.DefensiveStuffs)
+            {
+                homeAdjWp -= this.HomeTeam.Stats.DefensiveStuffs / this.AwayTeam.Stats.DefensiveStuffs;
+                awayAdjWp += this.HomeTeam.Stats.DefensiveStuffs / this.AwayTeam.Stats.DefensiveStuffs;
+            }
+
             this.HomeTeam.AdjustedWinProbability = homeAdjWp;
             this.AwayTeam.AdjustedWinProbability = awayAdjWp;
 

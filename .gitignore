@@ -5,3 +5,5 @@
 *.dll
 /NFLGamePredictor/bin/Debug
 /NFLGamePredictor/obj
+*.exe
+/NFLGamePredictor/bin/Debug
