@@ -122,6 +122,7 @@ namespace NFLGamePredictor.Services
             var rushingStats = response.splits.categories[2];
             var scoringStats = response.splits.categories[9];
             var defensiveStats = response.splits.categories[4];
+            var miscStats = response.splits.categories[10];
 
             //stats.PointsAgainst = Convert.ToInt32(defensiveStats.stats[24].value);            
             //stats.PointsFor = Convert.ToInt32(scoringStats.stats[8].value);
@@ -130,6 +131,7 @@ namespace NFLGamePredictor.Services
             stats.PointsPerGame = scoringStats.stats[9].value;
             stats.DefensiveStuffs = rushingStats.stats[14].value;
             stats.QBRating = passingStats.stats[42].value;
+            stats.TotalTimeOfpossessionInSeconds = miscStats.stats[9].value;
 
             return stats;
         }

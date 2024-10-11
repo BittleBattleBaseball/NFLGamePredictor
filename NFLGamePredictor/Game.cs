@@ -112,6 +112,18 @@ namespace NFLGamePredictor
                 awayAdjWp += (this.HomeTeam.Stats.QBRating / this.AwayTeam.Stats.QBRating) + 1.5;
             }
 
+            //6) Adjust for Total Time Of Posession
+            if (this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds > this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds)
+            {
+                homeAdjWp += 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+                awayAdjWp -= 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+            }
+            else if (this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds < this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds)
+            {
+                homeAdjWp -= 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+                awayAdjWp += 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+            }
+
             this.HomeTeam.AdjustedWinProbability = homeAdjWp;
             this.AwayTeam.AdjustedWinProbability = awayAdjWp;
 
