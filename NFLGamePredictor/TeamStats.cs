@@ -40,5 +40,7 @@
         public double QBRating { get; set; }
 
         public double TotalTimeOfpossessionInSeconds { get; set; }
+
+        public double ThirdDownConvertedPct { get; set; }
     }
 }

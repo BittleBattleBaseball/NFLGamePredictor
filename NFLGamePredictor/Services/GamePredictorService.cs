@@ -132,6 +132,7 @@ namespace NFLGamePredictor.Services
             stats.DefensiveStuffs = rushingStats.stats[14].value;
             stats.QBRating = passingStats.stats[42].value;
             stats.TotalTimeOfpossessionInSeconds = miscStats.stats[9].value;
+            stats.ThirdDownConvertedPct = miscStats.stats[15].value;
 
             return stats;
         }

@@ -124,6 +124,18 @@ namespace NFLGamePredictor
                 awayAdjWp += 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
             }
 
+            //7) Adjust for Third Down Converted Pct
+            if (this.HomeTeam.Stats.ThirdDownConvertedPct > this.AwayTeam.Stats.ThirdDownConvertedPct)
+            {
+                homeAdjWp +=  this.HomeTeam.Stats.ThirdDownConvertedPct / this.AwayTeam.Stats.ThirdDownConvertedPct;
+                awayAdjWp -= this.HomeTeam.Stats.ThirdDownConvertedPct / this.AwayTeam.Stats.ThirdDownConvertedPct;
+            }
+            else if (this.HomeTeam.Stats.ThirdDownConvertedPct < this.AwayTeam.Stats.ThirdDownConvertedPct)
+            {
+                homeAdjWp -= this.HomeTeam.Stats.ThirdDownConvertedPct / this.AwayTeam.Stats.ThirdDownConvertedPct;
+                awayAdjWp +=  this.HomeTeam.Stats.ThirdDownConvertedPct / this.AwayTeam.Stats.ThirdDownConvertedPct;
+            }
+
             this.HomeTeam.AdjustedWinProbability = homeAdjWp;
             this.AwayTeam.AdjustedWinProbability = awayAdjWp;
 
