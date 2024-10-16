@@ -124,15 +124,20 @@ namespace NFLGamePredictor.Services
             var defensiveStats = response.splits.categories[4];
             var miscStats = response.splits.categories[10];
 
+            stats.GamesPlayed = generalStats.stats.FirstOrDefault(x => x.displayName == "Games Played").value;
             //stats.PointsAgainst = Convert.ToInt32(defensiveStats.stats[24].value);            
             //stats.PointsFor = Convert.ToInt32(scoringStats.stats[8].value);
-            stats.SacksFor = Convert.ToInt32(defensiveStats.stats[14].value);
-            stats.YardsPerGame = passingStats.stats[9].value;
-            stats.PointsPerGame = scoringStats.stats[9].value;
-            stats.DefensiveStuffs = rushingStats.stats[14].value;
-            stats.QBRating = passingStats.stats[42].value;
-            stats.TotalTimeOfpossessionInSeconds = miscStats.stats[9].value;
-            stats.ThirdDownConvertedPct = miscStats.stats[15].value;
+            stats.SacksFor = defensiveStats.stats.FirstOrDefault(x => x.displayName == "Sacks").value;
+            stats.SacksAgainst = passingStats.stats.FirstOrDefault(x => x.displayName == "Total Sacks").value;
+            stats.YardsPerGame = passingStats.stats.FirstOrDefault(x => x.displayName == "Net Passing Yards Per Game").value; //"Net Passing Yards Per Game"
+            stats.PointsPerGame = scoringStats.stats.FirstOrDefault(x => x.displayName == "Total Points Per Game").value;//"Total Points Per Game"
+            stats.DefensiveStuffs = rushingStats.stats.FirstOrDefault(x => x.displayName == "Stuffs").value;
+            stats.QBRating = passingStats.stats.FirstOrDefault(x => x.displayName == "Quarterback Rating").value; //"Quarterback Rating"
+            stats.TimeOfpossessionInSeconds = miscStats.stats.FirstOrDefault(x => x.displayName == "Possession Time Seconds").value; //"Possession Time Seconds"
+            stats.ThirdDownConvertedPct = miscStats.stats.FirstOrDefault(x => x.displayName == "3rd down %").value;//"3rd down %"
+            stats.Touchdowns = passingStats.stats.FirstOrDefault(x => x.displayName == "Total Touchdowns").value; //"Total Touchdowns"
+            stats.YardsPerPassAttempt = passingStats.stats.FirstOrDefault(x => x.displayName == "Yards Per Pass Attempt").value; //"Yards Per Pass Attempt"
+            stats.TurnOverDifferential = miscStats.stats.FirstOrDefault(x => x.displayName == "Turnover Ratio").value;
 
             return stats;
         }
