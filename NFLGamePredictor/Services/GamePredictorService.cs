@@ -129,7 +129,7 @@ namespace NFLGamePredictor.Services
             //stats.PointsFor = Convert.ToInt32(scoringStats.stats[8].value);
             stats.SacksFor = defensiveStats.stats.FirstOrDefault(x => x.displayName == "Sacks").value;
             stats.SacksAgainst = passingStats.stats.FirstOrDefault(x => x.displayName == "Total Sacks").value;
-            stats.YardsPerGame = passingStats.stats.FirstOrDefault(x => x.displayName == "Net Passing Yards Per Game").value; //"Net Passing Yards Per Game"
+            stats.YardsPerGame = passingStats.stats.FirstOrDefault(x => x.displayName == "Net Yards Per Game").value; //"Net Passing Yards Per Game"
             stats.PointsPerGame = scoringStats.stats.FirstOrDefault(x => x.displayName == "Total Points Per Game").value;//"Total Points Per Game"
             stats.DefensiveStuffs = rushingStats.stats.FirstOrDefault(x => x.displayName == "Stuffs").value;
             stats.QBRating = passingStats.stats.FirstOrDefault(x => x.displayName == "Quarterback Rating").value; //"Quarterback Rating"
