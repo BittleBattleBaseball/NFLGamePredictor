@@ -74,6 +74,7 @@ namespace NFLGamePredictor.Services
                 }
             };
 
+            //!!!! THIS IS WHERE I PUT MY OWN LOGIC IN BEYOND JUST ESPN ANALYTICS
             result.AdjustForOtherFactors();
             return result;
         }
