@@ -27,8 +27,12 @@ namespace NFLGamePredictor.Services
                         string predictionResponse = await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/predictor");
                         predictionResponse = predictionResponse.Replace("$ref", "id");
                         GamePredictionResponse? gamePredictionResponse = JsonConvert.DeserializeObject<GamePredictionResponse>(predictionResponse);
+                        
+                        string oddsRsp= await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/odds");
+                        oddsRsp = oddsRsp.Replace("$ref", "id");
+                        GameOddsResponse? gameOddsResponse = JsonConvert.DeserializeObject<GameOddsResponse>(oddsRsp);
 
-                        predictions.Add(await ConvertPrediction(year, gamePredictionResponse));
+                        predictions.Add(await ConvertPrediction(year, gamePredictionResponse, gameOddsResponse));
                     }
                 }
 
@@ -40,21 +44,35 @@ namespace NFLGamePredictor.Services
             int confidencePoints = 16;
            foreach(var prediction  in predictions.OrderByDescending(g => g.WinnerFavoredBy).ToList())
             {
-                prediction.ConfidencePoints = confidencePoints;
+                prediction.PenneckConfidencePoints = confidencePoints;
                 finalResults.Add(prediction);
                 confidencePoints--;
             }
 
-            return finalResults;
+            //int oddsConfidencePoints = 16;
+            //foreach (var finalResult in finalResults.OrderByDescending(g => g.EspnBETOddsSpread).ToList())
+            //{
+            //    finalResult.OddsConfidencePoints = oddsConfidencePoints;
+            //    oddsConfidencePoints--;
+            //}
+
+            //int finalRankConfidencePoints = 16;
+            //foreach (var finalResult in finalResults.OrderByDescending(g => g.TotalConfidencePoints).ToList())
+            //{
+            //    finalResult.PenneckConfidencePoints = finalRankConfidencePoints;
+            //    finalRankConfidencePoints--;
+            //}
+
+            return finalResults;//.OrderByDescending(x => x.PenneckConfidencePoints).ToList();
 
         }
 
-        private async Task<Game> ConvertPrediction(int season, GamePredictionResponse? gamePredictionResponse)
+        private async Task<Game> ConvertPrediction(int season, GamePredictionResponse? gamePredictionResponse, GameOddsResponse? gameOddsResponse)
         {
             string[] teams = gamePredictionResponse.name.Split(" at ");
             var result = new Game
             {
-                Name = gamePredictionResponse.name,
+                Name = gamePredictionResponse.name,             
                 HomeTeam = new Team
                 {
                     Name = teams[1].Trim(),
@@ -62,6 +80,7 @@ namespace NFLGamePredictor.Services
                     WinProbability = gamePredictionResponse.homeTeam.statistics[0].value,
                     MatchupQuality = gamePredictionResponse.homeTeam.statistics[1].value,
                     TeamPredPtDiff = gamePredictionResponse.homeTeam.statistics[6].value,
+                    EspnBETOddsSpread = Convert.ToDouble(gameOddsResponse.items[0].homeTeamOdds.current.pointSpread.american),
                     Stats = await GetTeamStats(season, GetTeamNumberByName(teams[1].Trim()))
                 },
                 AwayTeam = new Team
@@ -70,6 +89,7 @@ namespace NFLGamePredictor.Services
                     WinProbability = gamePredictionResponse.awayTeam.statistics[0].value,
                     MatchupQuality = gamePredictionResponse.awayTeam.statistics[1].value,
                     TeamPredPtDiff = gamePredictionResponse.awayTeam.statistics[6].value,
+                    EspnBETOddsSpread = Convert.ToDouble(gameOddsResponse.items[0].awayTeamOdds.current.pointSpread.american),
                     Stats = await GetTeamStats(season, GetTeamNumberByName(teams[0].Trim()))
                 }
             };

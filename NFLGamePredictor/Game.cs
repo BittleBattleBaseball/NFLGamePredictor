@@ -8,7 +8,19 @@ namespace NFLGamePredictor
 
         private const double _adj = .25;
 
-        public int ConfidencePoints { get; set; }
+        public int PenneckConfidencePoints { get; set; }
+
+       // public int EspnPredictorConfidencePoints { get; set; }
+
+       // public int OddsConfidencePoints { get; set; }
+        
+        //public int TotalConfidencePoints
+        //{
+        //    get
+        //    {
+        //        return EspnPredictorConfidencePoints + OddsConfidencePoints;
+        //    }
+        //}
 
         public string Winner
         {
@@ -36,13 +48,13 @@ namespace NFLGamePredictor
             }
         }
 
-        public string Name { get; set; }
+        public string Name { get; set; }  
 
         public Team HomeTeam { get; set; }
 
         public Team AwayTeam { get; set; }
 
-        public bool IsDivisionGame { get; set; }
+        public bool IsDivisionGame { get; set; }    
 
         public void AdjustForOtherFactors()
         {
@@ -58,6 +70,20 @@ namespace NFLGamePredictor
             //1) Adjust for homefield advantage
             homeAdjWp = homeAdjWp + _homeFieldAdvantagePctIncrease;
             awayAdjWp = awayAdjWp - _homeFieldAdvantagePctIncrease;
+
+            // Adjust for Odds Spreads
+            if (this.HomeTeam.EspnBETOddsSpread < this.AwayTeam.EspnBETOddsSpread)//Negative is good
+            {
+                var adjuster = this.HomeTeam.EspnBETOddsSpread * -1 / 8;
+                homeAdjWp +=  adjuster;
+                awayAdjWp -=  adjuster;
+            }
+            else if (this.HomeTeam.EspnBETOddsSpread > this.AwayTeam.EspnBETOddsSpread)
+            {
+                var adjuster = this.AwayTeam.EspnBETOddsSpread * -1 / 8;
+                homeAdjWp -=  adjuster;
+                awayAdjWp +=  adjuster;
+            }
 
             // Adjust for Points Per game
             if (this.HomeTeam.Stats.PointsPerGame > this.AwayTeam.Stats.PointsPerGame)

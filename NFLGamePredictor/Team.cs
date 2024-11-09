@@ -12,6 +12,8 @@
 
         public bool IsHomeTeam { get; set; }
 
+        public double EspnBETOddsSpread { get; set; }
+
         //public double TeamChanceLoss { get; set; }
 
         public double TeamPredPtDiff { get; set; }
