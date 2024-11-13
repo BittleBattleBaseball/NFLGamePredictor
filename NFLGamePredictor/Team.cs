@@ -20,11 +20,16 @@
 
         public double TeamPredPtDiff { get; set; }
 
+        public int EspnOddsRanking { get; set; }    
+
+        public int EspnPctProbabilityRanking { get; set; }      
+
         public double TotalCombinedConfidence
         {
             get
             {
-                return this.WinProbability + (this.EspnBETOddsSpread * -1);
+                //return this.WinProbability + (this.EspnBETOddsSpread * -1);
+                return this.EspnOddsRanking + this.EspnPctProbabilityRanking;
             }
         }
 

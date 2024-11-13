@@ -220,6 +220,22 @@ namespace NFLGamePredictor.Services
                 dividedIntoTeamsList.Add(prediction.AwayTeam);
             }
 
+            //First give ranking for Odds
+            int oddsConfidencePoints = 16;
+            foreach (var prediction in dividedIntoTeamsList.OrderBy(g => (g.EspnBETOddsSpread)).ThenByDescending(p => p.WinProbability).ToList())
+            {
+                prediction.EspnOddsRanking = oddsConfidencePoints;
+                oddsConfidencePoints--;
+            }
+
+            //2nd give ranking for Pct Probability
+            int probabilityConfidencePoints = 16;
+            foreach (var prediction in dividedIntoTeamsList.OrderByDescending(g => (g.WinProbability)).ToList())
+            {
+                prediction.EspnPctProbabilityRanking = probabilityConfidencePoints;
+                oddsConfidencePoints--;
+            }
+
             List<Team> finalResults = new List<Team>();
             int confidencePoints = 16;
             foreach (var prediction in dividedIntoTeamsList.OrderByDescending(g => g.TotalCombinedConfidence).ToList())
