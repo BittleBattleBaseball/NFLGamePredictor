@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NFLGamePredictor.Contracts;
 using NFLGamePredictor.Dto;
+using System.Collections.Generic;
 
 namespace NFLGamePredictor.Services
 {
@@ -8,36 +9,7 @@ namespace NFLGamePredictor.Services
     {
         public async Task<List<Game>> GetPredictions(int year, int week)
         {
-            var predictions = new List<Game>();
-
-            using (HttpClient client = new HttpClient())
-            {
-                string responseBody = await client.GetStringAsync($"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{year}/types/2/weeks/{week}/events");
-                responseBody = responseBody.Replace("$ref", "gameUrl");
-                GamesByWeekResponse? gamesByWeekResponse = JsonConvert.DeserializeObject<GamesByWeekResponse>(responseBody);
-
-                if (gamesByWeekResponse != null)
-                {
-                    foreach (var game in gamesByWeekResponse.items)
-                    {
-                        string gameResponseBody = await client.GetStringAsync(game.gameUrl);
-                        gameResponseBody = gameResponseBody.Replace("$ref", "id");
-                        EventResponse? eventResponse = JsonConvert.DeserializeObject<EventResponse>(gameResponseBody);
-
-                        string predictionResponse = await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/predictor");
-                        predictionResponse = predictionResponse.Replace("$ref", "id");
-                        GamePredictionResponse? gamePredictionResponse = JsonConvert.DeserializeObject<GamePredictionResponse>(predictionResponse);
-
-                        string oddsRsp = await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/odds");
-                        oddsRsp = oddsRsp.Replace("$ref", "id");
-                        GameOddsResponse? gameOddsResponse = JsonConvert.DeserializeObject<GameOddsResponse>(oddsRsp);
-
-                        predictions.Add(await ConvertPrediction(year, gamePredictionResponse, gameOddsResponse));
-                    }
-                }
-
-
-            }
+            var predictions = await GetEspnResults(year, week); 
 
             List<Game> finalResults = new List<Game>();
 
@@ -236,5 +208,64 @@ namespace NFLGamePredictor.Services
             return -1;
         }
 
+        public async Task<List<Team>> GetWeeklyTeamRankings(int year, int week)
+        {
+            var predictions = await GetEspnResults(year, week);
+
+            List<Team> dividedIntoTeamsList = new List<Team>();
+
+            foreach (var prediction in predictions)
+            {
+                dividedIntoTeamsList.Add(prediction.HomeTeam);
+                dividedIntoTeamsList.Add(prediction.AwayTeam);
+            }
+
+            List<Team> finalResults = new List<Team>();
+            int confidencePoints = 16;
+            foreach (var prediction in dividedIntoTeamsList.OrderByDescending(g => g.TotalCombinedConfidence).ToList())
+            {
+                prediction.WeeklyRank = confidencePoints;
+                finalResults.Add(prediction);
+                confidencePoints--;
+            }
+
+            return finalResults;
+        }
+
+        private async Task<List<Game>> GetEspnResults(int year, int week)
+        {
+            var predictions = new List<Game>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                string responseBody = await client.GetStringAsync($"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{year}/types/2/weeks/{week}/events");
+                responseBody = responseBody.Replace("$ref", "gameUrl");
+                GamesByWeekResponse? gamesByWeekResponse = JsonConvert.DeserializeObject<GamesByWeekResponse>(responseBody);
+
+                if (gamesByWeekResponse != null)
+                {
+                    foreach (var game in gamesByWeekResponse.items)
+                    {
+                        string gameResponseBody = await client.GetStringAsync(game.gameUrl);
+                        gameResponseBody = gameResponseBody.Replace("$ref", "id");
+                        EventResponse? eventResponse = JsonConvert.DeserializeObject<EventResponse>(gameResponseBody);
+
+                        string predictionResponse = await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/predictor");
+                        predictionResponse = predictionResponse.Replace("$ref", "id");
+                        GamePredictionResponse? gamePredictionResponse = JsonConvert.DeserializeObject<GamePredictionResponse>(predictionResponse);
+
+                        string oddsRsp = await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/odds");
+                        oddsRsp = oddsRsp.Replace("$ref", "id");
+                        GameOddsResponse? gameOddsResponse = JsonConvert.DeserializeObject<GameOddsResponse>(oddsRsp);
+
+                        predictions.Add(await ConvertPrediction(year, gamePredictionResponse, gameOddsResponse));
+                    }
+                }
+
+
+            }
+
+            return predictions;
+        }
     }
 }
