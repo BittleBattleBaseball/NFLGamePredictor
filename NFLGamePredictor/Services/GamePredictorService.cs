@@ -27,8 +27,8 @@ namespace NFLGamePredictor.Services
                         string predictionResponse = await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/predictor");
                         predictionResponse = predictionResponse.Replace("$ref", "id");
                         GamePredictionResponse? gamePredictionResponse = JsonConvert.DeserializeObject<GamePredictionResponse>(predictionResponse);
-                        
-                        string oddsRsp= await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/odds");
+
+                        string oddsRsp = await client.GetStringAsync($"http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{eventResponse?.id}/competitions/{eventResponse?.id}/odds");
                         oddsRsp = oddsRsp.Replace("$ref", "id");
                         GameOddsResponse? gameOddsResponse = JsonConvert.DeserializeObject<GameOddsResponse>(oddsRsp);
 
@@ -42,7 +42,7 @@ namespace NFLGamePredictor.Services
             List<Game> finalResults = new List<Game>();
 
             int confidencePoints = 16;
-           foreach(var prediction  in predictions.OrderByDescending(g => g.WinnerFavoredBy).ToList())
+            foreach (var prediction in predictions.OrderByDescending(g => g.WinnerFavoredBy).ToList())
             {
                 prediction.PenneckConfidencePoints = confidencePoints;
                 finalResults.Add(prediction);
@@ -50,7 +50,7 @@ namespace NFLGamePredictor.Services
             }
 
             //int oddsConfidencePoints = 16;
-            //foreach (var finalResult in finalResults.OrderByDescending(g => g.EspnBETOddsSpread).ToList())
+            //foreach (var finalResult in finalResults.OrderByDescending(g => g.OddsFavoredBy).ToList())
             //{
             //    finalResult.OddsConfidencePoints = oddsConfidencePoints;
             //    oddsConfidencePoints--;

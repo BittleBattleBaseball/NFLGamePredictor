@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using NFLGamePredictor.Contracts;
-using NFLGamePredictor.Dto;
 
 namespace NFLGamePredictor.Controllers
 {
