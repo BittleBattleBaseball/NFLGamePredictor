@@ -12,15 +12,22 @@ namespace NFLGamePredictor
 
         public int EspnPredictorConfidencePoints { get; set; }
 
-       // public int OddsConfidencePoints { get; set; }
-        
-        //public int TotalConfidencePoints
-        //{
-        //    get
-        //    {
-        //        return EspnPredictorConfidencePoints + OddsConfidencePoints;
-        //    }
-        //}
+        public double HomeTeamTotalConfidencePoints { get; set; }
+
+        public double AwayTeamTotalConfidencePoints { get; set; }
+
+        public double WinnerFavoredByCombinedPctAndOdds
+        {
+            get
+            {
+                if (HomeTeamTotalConfidencePoints > AwayTeamTotalConfidencePoints)
+                {
+                    return HomeTeam.AdjustedWinProbability - AwayTeam.AdjustedWinProbability;
+                }
+
+                return AwayTeam.AdjustedWinProbability - HomeTeam.AdjustedWinProbability;
+            }
+        }
 
         public string Winner
         {

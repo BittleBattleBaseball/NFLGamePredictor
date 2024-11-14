@@ -233,7 +233,7 @@ namespace NFLGamePredictor.Services
             foreach (var prediction in dividedIntoTeamsList.OrderByDescending(g => (g.WinProbability)).ToList())
             {
                 prediction.EspnPctProbabilityRanking = probabilityConfidencePoints;
-                oddsConfidencePoints--;
+                probabilityConfidencePoints--;
             }
 
             List<Team> finalResults = new List<Team>();
