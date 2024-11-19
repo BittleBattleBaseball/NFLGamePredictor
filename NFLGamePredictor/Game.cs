@@ -65,11 +65,12 @@ namespace NFLGamePredictor
 
         public void AdjustForOtherFactors()
         {
+            /*
             int divider = 4;
             var homeAdjWp = this.HomeTeam.WinProbability;// > 50.0 ? ((this.HomeTeam.WinProbability - 50.0) / divider) + 50.0 : 50.0 - ((50.0 - this.HomeTeam.WinProbability) / divider);
             var awayAdjWp = this.AwayTeam.WinProbability;// > 50.0 ? ((this.AwayTeam.WinProbability - 50.0) / divider) + 50.0 : 50.0 - ((50.0 - this.AwayTeam.WinProbability) / divider);
 
-            /*
+            
        if(homeAdjWp > awayAdjWp)
            awayAdjWp = 100 - homeAdjWp;
        else if (awayAdjWp > homeAdjWp)
@@ -236,7 +237,57 @@ namespace NFLGamePredictor
        }
 
 
-    */
+    
+
+            this.HomeTeam.AdjustedWinProbability = homeAdjWp;
+            this.AwayTeam.AdjustedWinProbability = awayAdjWp;
+
+            */
+
+
+            //The below was my best 2 week stretch
+            var homeAdjWp = this.HomeTeam.WinProbability;
+            var awayAdjWp = this.AwayTeam.WinProbability;
+
+            //1) Adjust for homefield advantage
+            homeAdjWp = homeAdjWp + _homeFieldAdvantagePctIncrease;
+            awayAdjWp = awayAdjWp - _homeFieldAdvantagePctIncrease;
+
+            //2) Adjust for sacks FOR
+            if (this.HomeTeam.Stats.SacksFor > this.AwayTeam.Stats.SacksFor)
+            {
+                homeAdjWp += 1.0;// this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
+                awayAdjWp -= 1.0;// this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
+            }
+            else if (this.HomeTeam.Stats.SacksFor < this.AwayTeam.Stats.SacksFor)
+            {
+                homeAdjWp -= 1.0;// this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
+                awayAdjWp += 1.0;// this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
+            }
+
+            //2) Adjust for Yards Per game
+            if (this.HomeTeam.Stats.YardsPerGame > this.AwayTeam.Stats.YardsPerGame)
+            {
+                homeAdjWp += this.HomeTeam.Stats.YardsPerGame / this.AwayTeam.Stats.YardsPerGame;
+                awayAdjWp -= this.HomeTeam.Stats.YardsPerGame / this.AwayTeam.Stats.YardsPerGame;
+            }
+            else if (this.HomeTeam.Stats.YardsPerGame < this.AwayTeam.Stats.YardsPerGame)
+            {
+                homeAdjWp -= this.HomeTeam.Stats.YardsPerGame / this.AwayTeam.Stats.YardsPerGame;
+                awayAdjWp += this.HomeTeam.Stats.YardsPerGame / this.AwayTeam.Stats.YardsPerGame;
+            }
+
+            //3) Adjust for Points Per game
+            if (this.HomeTeam.Stats.PointsPerGame > this.AwayTeam.Stats.PointsPerGame)
+            {
+                homeAdjWp += this.HomeTeam.Stats.PointsPerGame / this.AwayTeam.Stats.PointsPerGame;
+                awayAdjWp -= this.HomeTeam.Stats.PointsPerGame / this.AwayTeam.Stats.PointsPerGame;
+            }
+            else if (this.HomeTeam.Stats.PointsPerGame < this.AwayTeam.Stats.PointsPerGame)
+            {
+                homeAdjWp -= this.HomeTeam.Stats.PointsPerGame / this.AwayTeam.Stats.PointsPerGame;
+                awayAdjWp += this.HomeTeam.Stats.PointsPerGame / this.AwayTeam.Stats.PointsPerGame;
+            }
 
             this.HomeTeam.AdjustedWinProbability = homeAdjWp;
             this.AwayTeam.AdjustedWinProbability = awayAdjWp;

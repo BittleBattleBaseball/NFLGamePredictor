@@ -7,3 +7,15 @@
 /NFLGamePredictor/obj
 *.exe
 /NFLGamePredictor/bin/Debug
+NFLGamePredictor/bin/Debug/net8.0/NFLGamePredictor.dll
+NFLGamePredictor/bin/Debug/net8.0/NFLGamePredictor.exe
+NFLGamePredictor/bin/Debug/net8.0/NFLGamePredictor.pdb
+NFLGamePredictor/obj/Debug/net8.0/apphost.exe
+NFLGamePredictor/obj/Debug/net8.0/NFLGamePredictor.AssemblyInfo.cs
+NFLGamePredictor/obj/Debug/net8.0/NFLGamePredictor.AssemblyInfoInputs.cache
+NFLGamePredictor/obj/Debug/net8.0/NFLGamePredictor.csproj.CoreCompileInputs.cache
+NFLGamePredictor/obj/Debug/net8.0/NFLGamePredictor.dll
+NFLGamePredictor/obj/Debug/net8.0/NFLGamePredictor.pdb
+NFLGamePredictor/obj/Debug/net8.0/NFLGamePredictor.sourcelink.json
+NFLGamePredictor/obj/Debug/net8.0/ref/NFLGamePredictor.dll
+NFLGamePredictor/obj/Debug/net8.0/refint/NFLGamePredictor.dll
