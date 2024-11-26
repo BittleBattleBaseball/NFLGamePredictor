@@ -4,9 +4,22 @@ namespace NFLGamePredictor
 {
     public class Game
     {
-        private const double _homeFieldAdvantagePctIncrease = .25;
+        private const double _homeFieldAdvantagePctIncrease = 2.5;
 
         private const double _adj = .25;
+
+        public string Winner
+        {
+            get
+            {
+                if (HomeTeam.AdjustedWinProbability > AwayTeam.AdjustedWinProbability)
+                {
+                    return HomeTeam.Name;
+                }
+
+                return AwayTeam.Name;
+            }
+        }
 
         public int PenneckConfidencePoints { get; set; }
 
@@ -29,19 +42,6 @@ namespace NFLGamePredictor
             }
         }
 
-        public string Winner
-        {
-            get
-            {
-                if (HomeTeam.AdjustedWinProbability > AwayTeam.AdjustedWinProbability)
-                {
-                    return HomeTeam.Name;
-                }
-
-                return AwayTeam.Name;
-            }
-        }
-
         public double WinnerFavoredBy
         {
             get
@@ -55,7 +55,7 @@ namespace NFLGamePredictor
             }
         }
 
-        public string Name { get; set; }  
+        public string Name { get; set; }
 
         public Team HomeTeam { get; set; }
 
@@ -273,8 +273,8 @@ namespace NFLGamePredictor
             }
             else if (this.HomeTeam.Stats.YardsPerGame < this.AwayTeam.Stats.YardsPerGame)
             {
-                homeAdjWp -= this.HomeTeam.Stats.YardsPerGame / this.AwayTeam.Stats.YardsPerGame;
-                awayAdjWp += this.HomeTeam.Stats.YardsPerGame / this.AwayTeam.Stats.YardsPerGame;
+                homeAdjWp -= this.AwayTeam.Stats.YardsPerGame / this.HomeTeam.Stats.YardsPerGame;
+                awayAdjWp += this.AwayTeam.Stats.YardsPerGame / this.HomeTeam.Stats.YardsPerGame;
             }
 
             //3) Adjust for Points Per game
@@ -285,8 +285,56 @@ namespace NFLGamePredictor
             }
             else if (this.HomeTeam.Stats.PointsPerGame < this.AwayTeam.Stats.PointsPerGame)
             {
-                homeAdjWp -= this.HomeTeam.Stats.PointsPerGame / this.AwayTeam.Stats.PointsPerGame;
-                awayAdjWp += this.HomeTeam.Stats.PointsPerGame / this.AwayTeam.Stats.PointsPerGame;
+                homeAdjWp -= this.AwayTeam.Stats.PointsPerGame / this.HomeTeam.Stats.PointsPerGame;
+                awayAdjWp += this.AwayTeam.Stats.PointsPerGame / this.HomeTeam.Stats.PointsPerGame;
+            }
+
+            //4) Adjust for Defensive Stuffs
+            if (this.HomeTeam.Stats.DefensiveStuffs > this.AwayTeam.Stats.DefensiveStuffs)
+            {
+                homeAdjWp += this.HomeTeam.Stats.DefensiveStuffs / this.AwayTeam.Stats.DefensiveStuffs;
+                awayAdjWp -= this.HomeTeam.Stats.DefensiveStuffs / this.AwayTeam.Stats.DefensiveStuffs;
+            }
+            else if (this.HomeTeam.Stats.DefensiveStuffs < this.AwayTeam.Stats.DefensiveStuffs)
+            {
+                homeAdjWp -= this.AwayTeam.Stats.DefensiveStuffs / this.HomeTeam.Stats.DefensiveStuffs;
+                awayAdjWp += this.AwayTeam.Stats.DefensiveStuffs / this.HomeTeam.Stats.DefensiveStuffs;
+            }
+
+            //5) Adjust for QBR
+            if (this.HomeTeam.Stats.QBRating > this.AwayTeam.Stats.QBRating)
+            {
+                homeAdjWp += (this.HomeTeam.Stats.QBRating / this.AwayTeam.Stats.QBRating) + 1.5;
+                awayAdjWp -= (this.HomeTeam.Stats.QBRating / this.AwayTeam.Stats.QBRating) + 1.5;
+            }
+            else if (this.HomeTeam.Stats.QBRating < this.AwayTeam.Stats.QBRating)
+            {
+                homeAdjWp -= (this.AwayTeam.Stats.QBRating / this.HomeTeam.Stats.QBRating) + 1.5;
+                awayAdjWp += (this.AwayTeam.Stats.QBRating / this.HomeTeam.Stats.QBRating) + 1.5;
+            }
+
+            //6) Adjust for Total Time Of Posession
+            if (this.HomeTeam.Stats.TimeOfpossessionInSeconds > this.AwayTeam.Stats.TimeOfpossessionInSeconds)
+            {
+                homeAdjWp += 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+                awayAdjWp -= 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+            }
+            else if (this.HomeTeam.Stats.TimeOfpossessionInSeconds < this.AwayTeam.Stats.TimeOfpossessionInSeconds)
+            {
+                homeAdjWp -= 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+                awayAdjWp += 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+            }
+
+            //7) Adjust for Third Down Converted Pct
+            if (this.HomeTeam.Stats.ThirdDownConvertedPct > this.AwayTeam.Stats.ThirdDownConvertedPct)
+            {
+                homeAdjWp += this.HomeTeam.Stats.ThirdDownConvertedPct / this.AwayTeam.Stats.ThirdDownConvertedPct;
+                awayAdjWp -= this.HomeTeam.Stats.ThirdDownConvertedPct / this.AwayTeam.Stats.ThirdDownConvertedPct;
+            }
+            else if (this.HomeTeam.Stats.ThirdDownConvertedPct < this.AwayTeam.Stats.ThirdDownConvertedPct)
+            {
+                homeAdjWp -= this.AwayTeam.Stats.ThirdDownConvertedPct / this.HomeTeam.Stats.ThirdDownConvertedPct;
+                awayAdjWp += this.AwayTeam.Stats.ThirdDownConvertedPct / this.HomeTeam.Stats.ThirdDownConvertedPct;
             }
 
             this.HomeTeam.AdjustedWinProbability = homeAdjWp;
