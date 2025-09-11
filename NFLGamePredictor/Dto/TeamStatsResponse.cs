@@ -1,6 +1,4 @@
 ﻿// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-using Newtonsoft.Json;
-
 public class Category
 {
     public string name { get; set; }
@@ -22,13 +20,11 @@ public class TeamStatsResponse
 
 public class Season
 {
-    [JsonProperty("id")]
     public string id { get; set; }
 }
 
 public class SeasonType
 {
-    [JsonProperty("id")]
     public string id { get; set; }
 }
 
@@ -57,7 +53,6 @@ public class Stat
 
 public class Team
 {
-    [JsonProperty("id")]
     public string id { get; set; }
 }
 
