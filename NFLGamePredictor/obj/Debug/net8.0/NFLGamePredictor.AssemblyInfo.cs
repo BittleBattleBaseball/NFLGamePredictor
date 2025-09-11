@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NFLGamePredictor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+46ea93f5268207ab69c647015741d97972f3ae80")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3887a8536a3d7a1b472bb384f4cdc0ec0b4badf4")]
 [assembly: System.Reflection.AssemblyProductAttribute("NFLGamePredictor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NFLGamePredictor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

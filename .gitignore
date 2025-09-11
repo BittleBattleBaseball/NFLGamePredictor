@@ -19,3 +19,5 @@ NFLGamePredictor/obj/Debug/net8.0/NFLGamePredictor.pdb
 NFLGamePredictor/obj/Debug/net8.0/NFLGamePredictor.sourcelink.json
 NFLGamePredictor/obj/Debug/net8.0/ref/NFLGamePredictor.dll
 NFLGamePredictor/obj/Debug/net8.0/refint/NFLGamePredictor.dll
+*.dll
+/NFLGamePredictor/obj
