@@ -256,10 +256,10 @@ namespace NFLGamePredictor.Services
             {
 
                 //Regular Season
-                //  string responseBody = await client.GetStringAsync($"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{year}/types/2/weeks/{week}/events");
+                string responseBody = await client.GetStringAsync($"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{year}/types/2/weeks/{week}/events");
 
                 //Playoffs (use season start year, not new year, type 3, and playoff week # i.e. https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2025/types/3/weeks/1/events)
-                string responseBody = await client.GetStringAsync($"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{year}/types/3/weeks/{week}/events");           
+                //string responseBody = await client.GetStringAsync($"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{year}/types/3/weeks/{week}/events");           
                 
 
                 responseBody = responseBody.Replace("$ref", "gameUrl");
