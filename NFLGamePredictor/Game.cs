@@ -249,6 +249,8 @@ namespace NFLGamePredictor
             var homeAdjWp = this.HomeTeam.WinProbability;
             var awayAdjWp = this.AwayTeam.WinProbability;
 
+            
+
             //1) Adjust for homefield advantage
             homeAdjWp = homeAdjWp + _homeFieldAdvantagePctIncrease;
             awayAdjWp = awayAdjWp - _homeFieldAdvantagePctIncrease;
@@ -258,13 +260,13 @@ namespace NFLGamePredictor
                 //2) Adjust for sacks FOR
                 if (this.HomeTeam.Stats.SacksFor > this.AwayTeam.Stats.SacksFor)
                 {
-                    homeAdjWp += 1.0;// this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
-                    awayAdjWp -= 1.0;// this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
+                    homeAdjWp +=  this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
+                    awayAdjWp -=  this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
                 }
                 else if (this.HomeTeam.Stats.SacksFor < this.AwayTeam.Stats.SacksFor)
                 {
-                    homeAdjWp -= 1.0;// this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
-                    awayAdjWp += 1.0;// this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
+                    homeAdjWp -=  this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
+                    awayAdjWp +=  this.HomeTeam.Stats.SacksFor / this.AwayTeam.Stats.SacksFor;
                 }
 
                 //2) Adjust for Yards Per game
@@ -318,13 +320,13 @@ namespace NFLGamePredictor
                 //6) Adjust for Total Time Of Posession
                 if (this.HomeTeam.Stats.TimeOfpossessionInSeconds > this.AwayTeam.Stats.TimeOfpossessionInSeconds)
                 {
-                    homeAdjWp += 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
-                    awayAdjWp -= 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+                    homeAdjWp +=  this.HomeTeam.Stats.TimeOfpossessionInSeconds / this.AwayTeam.Stats.TimeOfpossessionInSeconds;
+                    awayAdjWp -=  this.HomeTeam.Stats.TimeOfpossessionInSeconds / this.AwayTeam.Stats.TimeOfpossessionInSeconds;
                 }
                 else if (this.HomeTeam.Stats.TimeOfpossessionInSeconds < this.AwayTeam.Stats.TimeOfpossessionInSeconds)
                 {
-                    homeAdjWp -= 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
-                    awayAdjWp += 1.5;// this.HomeTeam.Stats.TotalTimeOfpossessionInSeconds / this.AwayTeam.Stats.TotalTimeOfpossessionInSeconds;
+                    homeAdjWp -=  this.HomeTeam.Stats.TimeOfpossessionInSeconds / this.AwayTeam.Stats.TimeOfpossessionInSeconds;
+                    awayAdjWp +=  this.HomeTeam.Stats.TimeOfpossessionInSeconds / this.AwayTeam.Stats.TimeOfpossessionInSeconds;
                 }
 
                 //7) Adjust for Third Down Converted Pct
@@ -340,6 +342,9 @@ namespace NFLGamePredictor
                 }
 
             }
+
+            
+            
 
             this.HomeTeam.AdjustedWinProbability = homeAdjWp;
             this.AwayTeam.AdjustedWinProbability = awayAdjWp;

@@ -54,11 +54,6 @@ C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGamePredictor.MvcA
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGamePredictor.sourcelink.json
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets.build.json
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets.development.json
-C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets\msbuild.NFLGamePredictor.Microsoft.AspNetCore.StaticWebAssets.props
-C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets\msbuild.build.NFLGamePredictor.props
-C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.NFLGamePredictor.props
-C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.NFLGamePredictor.props
-C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets.pack.json
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\scopedcss\bundle\NFLGamePredictor.styles.css
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGameP.2F15EC08.Up2Date
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGamePredictor.dll
@@ -66,3 +61,11 @@ C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\refint\NFLGamePredict
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGamePredictor.pdb
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\NFLGamePredictor.genruntimeconfig.cache
 C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\ref\NFLGamePredictor.dll
+C:\CODE\NFLGamePredictor\NFLGamePredictor\bin\Debug\net8.0\NFLGamePredictor.staticwebassets.endpoints.json
+C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\CODE\NFLGamePredictor\NFLGamePredictor\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
